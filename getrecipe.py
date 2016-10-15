@@ -23,7 +23,8 @@ class get_recipe(object):
                 temp = dict({('title',parsed['recipes'][i]['title']),('id',parsed['recipes'][i]['recipe_id'])})
                 response.insert(num,temp)
                 num=num+1
-        print type(response)
+        return str(response)
 
-obj = get_recipe("shredded chicken",1)
-obj.return_recipe()
+if __name__ == '__main__':
+    obj = get_recipe("shredded chicken",1)
+    obj.return_recipe()

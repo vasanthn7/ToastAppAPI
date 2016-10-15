@@ -27,14 +27,15 @@ l = [
 def getTasks():
     return jsonify({'tasks':tasks})
 
-@app.route('/api/recipe/tasks/<string:ing>', methods=['GET'])
+@app.route('/api/<string:ing>', methods=['GET'])
 def get_task(ing):
     # task = [task for task in tasks if task['id'] == task_id]
     # if len(task) == 0:
     #     abort(404)
     # ing = 'shredded chicken,'
     # get_r =
-    return get_recipe(ing, 1)
+    obj = get_recipe(ing, 1)
+    return obj.return_recipe()
     #print get_r.return_recipe.content
     # return jsonify(l)
 
