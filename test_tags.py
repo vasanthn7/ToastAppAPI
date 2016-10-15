@@ -2,11 +2,11 @@ from lxml import html
 import requests
 import json
 
-url = "http://www.realsimple.com/food-recipes/browse-all-recipes/zucchini-spice-bread"
+url = "http://whatsgabycooking.com/skinny-asparagus-and-gruyere-tart/"
 page1 = requests.get(url)
 #print page1.text
 tree = html.fromstring(page1.content)
-directions = tree.xpath('//section[@class="directions recipe-info-section" and @itemprop="recipeInstructions"]/div/ol/li/text()')
+directions = tree.xpath('//li[@class="instruction" and @itemprop="recipeInstructions"]/text()')
 for i in range(len(directions)):
 	print directions[i]
 print len(directions)

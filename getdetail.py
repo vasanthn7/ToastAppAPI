@@ -49,12 +49,12 @@ class get_detail(object):
             tag = '//ul[@itemprop="recipeInstructions"]/li/text()'
         elif (publisher == "Real Simple"):
             tag = '//section[@class="directions recipe-info-section" and @itemprop="recipeInstructions"]/div/ol/li/text()'
-        # elif (publisher == "Serious Eats"):
-        # elif (publisher == "Smitten Kitchen"):
-        # elif (publisher == "The Pioneer Woman"):
-        # elif (publisher == "Two Peas and Their Pod"):
-        # elif (publisher == "Vintage Mixer"):
-        # elif (publisher == "What's Gaby Cooking"):
+        elif (publisher == "Two Peas and Their Pod"):
+            tag = '//div[@class="instructions" and @itemprop="recipeInstructions"]/p/text()'
+        elif (publisher == "Vintage Mixer"):
+            tag = '//li[@class="instruction" and @itemprop="recipeInstructions"]/text()'
+        elif (publisher == "What's Gaby Cooking" | publisher == "Whats Gaby Cooking"):
+            tag = '//li[@class="instruction" and @itemprop="recipeInstructions"]/text()'
         else:
     		tag = 404
 
@@ -69,7 +69,7 @@ class get_detail(object):
         tree = html.fromstring(page1.content)
         directions = tree.xpath(tag)
         response = json.dumps({'Status':1,'Direction':directions,'Ingredients':ingredients},sort_keys=False,separators=(',',':'))
-        print str(response).replace("'",'')
+        return str(response).replace("'",'')
 
 if __name__ == '__main__':
     obj = get_detail("55c5af")
