@@ -9,7 +9,6 @@ class get_detail(object):
     def return_detail(self):
         api_key='a7117cb7dc7f8b768ec323b949e752dd'
         response = []
-        print type(self.id)
         page = requests.get('http://food2fork.com/api/get?key='+api_key+'&rId='+str(self.id))
         parsed = json.loads(page.text)
         publisher = parsed['recipe']['publisher']
@@ -40,11 +39,27 @@ class get_detail(object):
     		tag = '//ol[@class="recipeSteps"]/li/text()'
     	elif (publisher == "Lisa's Kitchen"):
     		tag = '//li[@itemprop="recipeInstructions"]/p/text()'
-    	else:
+        elif (publisher == "My Baking Addiction"):
+            tag = '//span[@itemprop="recipeInstructions"]/ol/li/text()'
+        elif (publisher == "Panini Happy"):
+            tag = '//li[@class="instruction"]/text()'
+        elif (publisher == "PBS Food"):
+            tag = '//ol[@class="instructions"]/li/span[@class="txt"]/text()'
+        elif (publisher == "Pillsbury Baking"):
+            tag = '//ul[@itemprop="recipeInstructions"]/li/text()'
+        elif (publisher == "Real Simple"):
+            tag = '//section[@class="directions recipe-info-section" and @itemprop="recipeInstructions"]/div/ol/li/text()'
+        # elif (publisher == "Serious Eats"):
+        # elif (publisher == "Smitten Kitchen"):
+        # elif (publisher == "The Pioneer Woman"):
+        # elif (publisher == "Two Peas and Their Pod"):
+        # elif (publisher == "Vintage Mixer"):
+        # elif (publisher == "What's Gaby Cooking"):
+        else:
     		tag = 404
 
         if (tag == 404):
-            response = json.dumps({'Status':0},sort_keys=False,separators=(',',':'))
+            response = json.dumps({'Status':0,'Direction':'NULL','Ingredients':'NULL'},sort_keys=False,separators=(',',':'))
             return str(response).replace("'",'')
         ingredients = parsed['recipe']['ingredients']
         # print ingredients
@@ -53,9 +68,9 @@ class get_detail(object):
         #print page1.text
         tree = html.fromstring(page1.content)
         directions = tree.xpath(tag)
-        response = json.dumps({'Status':1,'Ingredients':ingredients,'Direction':directions},sort_keys=False,separators=(',',':'))
-        return str(response).replace("'",'')
+        response = json.dumps({'Status':1,'Direction':directions,'Ingredients':ingredients},sort_keys=False,separators=(',',':'))
+        print str(response).replace("'",'')
 
 if __name__ == '__main__':
-    obj = get_detail("35437")
+    obj = get_detail("55c5af")
     obj.return_detail()
