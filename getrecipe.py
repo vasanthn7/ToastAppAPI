@@ -20,10 +20,10 @@ class get_recipe(object):
         count = parsed['count']
         for i in range(0,count):
             if(valid(parsed['recipes'][i]['publisher'])):
-                temp = dict({('title',parsed['recipes'][i]['title']),('id',parsed['recipes'][i]['recipe_id'])})
-                response.insert(num,temp)
+                temp  = json.dumps({'title':parsed['recipes'][i]['title'],'id':parsed['recipes'][i]['recipe_id']},separators=(',',':'))
+                response.append(temp)
                 num=num+1
-        return str(response)
+        return str(response).replace("'",'')
 
 if __name__ == '__main__':
     obj = get_recipe("shredded chicken",1)
